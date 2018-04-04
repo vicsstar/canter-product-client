@@ -3,26 +3,13 @@ import React, { Component } from 'react';
 class DetailEntry extends Component {
   constructor(props) {
     super(props);
-    this.keyChanged = this.keyChanged.bind(this);
-    this.valueChanged = this.valueChanged.bind(this);
+    this.detailChanged = this.detailChanged.bind(this);
   }
-
-  keyChanged(event) {
-    this.props.onChange(
-      Object.assign(
-        {}, this.props.detail,
-        { key: event.target.value }
-      )
-    );
-  }
-
-  valueChanged(event) {
-    this.props.onChange(
-      Object.assign(
-        {}, this.props.detail,
-        { value: event.target.value }
-      )
-    );
+  
+  detailChanged(field, target) {
+    const detail = Object.assign({}, this.props.detail);
+    detail[field] = target.value;
+    this.props.onChange(detail);
   }
 
   render() {
@@ -32,7 +19,7 @@ class DetailEntry extends Component {
           <div className="form-group">
             <label htmlFor="key" className="col-sm-2 control-label">Key</label>
             <div className="col-sm-8">
-              <input type="text" className="form-control" id="key" placeholder="Key" onChange={this.keyChanged}/>
+              <input type="text" className="form-control" id="key" placeholder="Key" onChange={(e) => this.detailChanged('key', e.target)}/>
             </div>
           </div>
         </div>
@@ -40,7 +27,7 @@ class DetailEntry extends Component {
           <div className="form-group">
             <label htmlFor="value" className="col-sm-2 control-label">Value</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="value" placeholder="Value" onChange={this.valueChanged}/>
+              <input type="text" className="form-control" id="value" placeholder="Value" onChange={(e) => this.detailChanged('value', e.target)}/>
             </div>
           </div>
         </div>
